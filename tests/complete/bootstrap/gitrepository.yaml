@@ -1,0 +1,12 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: bootstrap
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  ref:
+    branch: "{{ .Values.metadata.annotations.addons_repo_revision }}"
+  secretRef:
+    name: flux-system
+  url: "{{ .Values.metadata.annotations.addons_repo_url }}/{{ .Values.metadata.annotations.addons_repo_basepath }}"
