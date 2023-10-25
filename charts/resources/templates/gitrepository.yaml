@@ -1,0 +1,13 @@
+{{- if .Values.gitrepository }}
+{{- range .Values.gitrepository }}
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  {{- toYaml .metadata | nindent 2 }}
+  annotations: {{ toYaml $.Values.metadata.annotations | nindent 4 }}
+  labels: {{ toYaml $.Values.metadata.labels | nindent 4 }}
+spec:
+  {{- toYaml .spec | nindent 2 }}
+---
+{{- end }}
+{{- end }}

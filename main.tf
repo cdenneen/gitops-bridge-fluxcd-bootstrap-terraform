@@ -51,16 +51,16 @@ resource "helm_release" "bootstrap" {
 
  values = [
    <<-EOT
-   resources:
+   ${each.key}:
      - ${indent(4, each.value)}
    metadata:
      annotations:
      %{ for k, v in local.fluxcd_annotations ~}
-  ${k}: ${v}
+  ${k}: "${v}"
      %{ endfor }
      labels:
      %{ for k, v in local.fluxcd_labels ~}
-  ${k}: ${v}
+  ${k}: "${v}"
      %{ endfor ~}
    EOT
  ]

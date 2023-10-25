@@ -1,12 +1,16 @@
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
 metadata:
   name: bootstrap
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: "./clusters/{{ .Values.metadata.annotations.cluster_name }}"
+  path: './{{metadata.annotations.addons_repo_path}}'
   prune: true
   sourceRef:
     kind: GitRepository
     name: bootstrap
+  postBuild:
+    substitute:
+      base_path: '{{metadata.annotations.addons_basepath}}'
+      cluster_name: '{{ metadata.labels.cluster_name}}'
+      environment: '{{metadata.labels.environment}}'
+

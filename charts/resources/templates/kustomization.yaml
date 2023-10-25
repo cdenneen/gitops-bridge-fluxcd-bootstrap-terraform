@@ -1,0 +1,14 @@
+{{- if .Values.kustomization }}
+{{- range .Values.kustomization }}
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  {{- toYaml .metadata | nindent 2 }}
+  {{- toYaml $.Values.metadata | nindent 2 }}
+spec:
+  commonMetadata:
+    {{- toYaml $.Values.metadata | nindent 4 }}
+  {{- toYaml .spec | nindent 2 }}
+---
+{{- end }}
+{{- end }}
