@@ -4,7 +4,7 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: '{{metadata.annotations.addons_repo_revision}}'
+    branch: '{{$.Values.metadata.annotations.addons_repo_revision}}'
   secretRef:
     name: flux-system
-  url: '{{metadata.annotations.addons_repo_url}}/{{metadata.annotations.addons_repo_basepath}}'
+  url: '{{$.Values.metadata.annotations.addons_repo_url}}/{{$.Values.metadata.annotations.addons_repo_basepath}}'

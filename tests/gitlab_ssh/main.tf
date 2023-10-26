@@ -26,7 +26,7 @@ locals {
   gitops_addons_url      = "ssh://git@gitlab.com/${var.gitlab_org}/${var.gitlab_repository}"
   gitops_addons_basepath = ""
   gitops_addons_path     = "bootstrap/control-plane/addons"
-  gitops_addons_revision = "main"
+  gitops_addons_revision = "helm_values"
   components_extra       = var.components_extra
 
   oss_addons = {

@@ -8,7 +8,7 @@ metadata:
 spec:
   commonMetadata:
     {{- toYaml $.Values.metadata | nindent 4 }}
-  {{- toYaml .spec | nindent 2 }}
+  {{- tpl (toYaml .spec) $ | nindent 2 }}
 ---
 {{- end }}
 {{- end }}
