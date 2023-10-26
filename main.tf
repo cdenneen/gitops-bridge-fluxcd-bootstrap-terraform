@@ -39,6 +39,9 @@ locals {
     },
     try(var.cluster.metadata, {})
   )
+  addons_list = [
+    for key, value in var.cluster.addons: replace(trimprefix(key, "enable_"), "_", "-") if value == true
+  ]
 }
 
 resource "helm_release" "bootstrap" {
@@ -52,7 +55,8 @@ resource "helm_release" "bootstrap" {
  values = [
    <<-EOT
    ${each.key}:
-     - ${indent(4, each.value)}
+   -
+      ${indent(4, each.value)}
    metadata:
      annotations:
      %{ for k, v in local.fluxcd_annotations ~}
@@ -61,7 +65,11 @@ resource "helm_release" "bootstrap" {
      labels:
      %{ for k, v in local.fluxcd_labels ~}
   ${k}: "${v}"
-     %{ endfor ~}
+     %{ endfor }
+   addons:
+  %{ for k in local.addons_list ~}
+   - ${k}
+  %{ endfor }
    EOT
  ]
 
